@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -97,6 +98,39 @@ public class ItemController {
 		System.out.println("Items with Id "+ id +" is deleted.");
 	}
 
+	@GetMapping("/admin/medicines")
+	public List<Item> getMedicines() {
+		List<ItemEntity> itemList = itemRep.findAll();
+		List<Item> itemsList = new ArrayList<Item>();
+		
+		for (ItemEntity itemEntity : itemList) {
+			
+			Item itm = new Item();
+			BeanUtils.copyProperties(itemEntity, itm);
+			itemsList.add(itm);
+		}
+
+		return itemsList;
+	}
+	
+	@DeleteMapping("/admin/medicines/{id}")
+	public void deleteMedicine(@PathVariable long id) throws Exception {
+		itemRep.deleteById(id);
+		System.out.println("Medicine with Id "+ id +" is deleted.");
+	}
+	
+	@PutMapping("/admin/medicines/{id}")
+	public String updateMedicine(@PathVariable long id, @RequestBody ItemEntity item) throws Exception {
+		ItemEntity itemData = itemRep.findAllByItemId(id);
+		
+		if (itemData.getItemId() == id) {
+			
+			item.setItemId(id);
+			
+		} 
+		itemRep.save(item);
+		return item.getItemName() + " added successfully.";
+	}
 
 	@GetMapping("/items/{id}")
 	public ItemEntity getItemById(@PathVariable long id) throws Exception {
@@ -104,7 +138,12 @@ public class ItemController {
 		return item;
 
 	}
-
+	
+	@GetMapping("/admin/medicinesReport")
+	public List<ItemEntity> getMedicinesReport() {
+		List<ItemEntity> itemsList = itemRep.findAll();
+		return itemsList;
+	}
 
 
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////

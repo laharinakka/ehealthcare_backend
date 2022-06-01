@@ -17,14 +17,19 @@ public class UserEntity implements Serializable {
 
 	
 	//TODO added recently - not pushed
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Id
 	@Column(name = "ID")
-	private int Id;
+	public int Id;
+	
 
 	/** The status. */
-	@Column(name = "USERNAME")
-	private String username;
+	@Column(name = "FirstNAME")
+	private String firstname;
+	
+	@Column(name = "LastName")
+	private String lastname;
+	
 
 	@Column(name = "EMAIL")
 	private String email;
@@ -32,7 +37,16 @@ public class UserEntity implements Serializable {
 	
 	@Column(name = "PWD")
 	private String pwd;
+	
+	@Column(name = "DOB")
+	private String dob;
 
+	@Column(name = "PhoneNumber")
+	private String phonenumber;
+	
+	@Column(name = "Address")
+	private String address;
+	
 	@Column(name = "WALLET_AMOUNT")
 	private int walletAmount;
 	
@@ -50,11 +64,11 @@ public class UserEntity implements Serializable {
 	}
 
 	public String getUsername() {
-		return username;
+		return firstname;
 	}
 
 	public void setUsername(String username) {
-		this.username = username;
+		this.firstname = username;
 	}
 
 	public String getEmail() {
@@ -92,7 +106,7 @@ public class UserEntity implements Serializable {
 	public UserEntity(int id, String username, String email, String pwd, int walletAmount, boolean isAdmin) {
 		super();
 		this.Id = id;
-		this.username = username;
+		this.firstname = username;
 		this.email = email;
 		this.pwd = pwd;
 		this.walletAmount = walletAmount;

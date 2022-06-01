@@ -41,12 +41,14 @@ public class UserController {
 		return users;
 	}
 	
-	@PostMapping("/register")
+	@PostMapping("/Signup")
 	public String addUser(@RequestBody UserEntity user) throws Exception {
 		user.setAdmin(false);
 		user.setWalletAmount(1000);
 		userRep.save(user);
-		return user.getEmail() + " added successfully.";
+		//return user.getEmail() + " added successfully.";
+		return Integer.toString(user.getId()) + "\tUser is registered succesfully and please use the ID to login";
+		
 	}
 	
 	@PostMapping("/login")
